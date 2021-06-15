@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 from werkzeug.wrappers import Request, Response
 from flask.helpers import url_for
 from flask_sqlalchemy import SQLAlchemy
@@ -20,11 +20,28 @@ class Friends(db.Model):
         return '<Name %r>' % self.id
 
 #Webpage Routes
+@app.route('/data', methods=['POST', 'GET'])
+def data():
+    title = "Database Book"
+
+    if request.method == "POST":
+        friend_name = request.form['name']
+        new_friend = Friends(name=friend_name)
+        #push
+        try:
+            db.session.add(new_friend)
+            db.session.commit()
+            return redirect('/data')
+        except:
+            return "There was an error adding to database"
+    else:
+        friends = Friends.query.order_by(Friends.date_created)
+        return render_template("data.html", title=title, friends=friends)
+    
 @app.route('/')
 def index():
     title = "Database Book"
-    name = ["Luis", "John", "Sid"]
-    return render_template("./index.html", title=title, name=name)
+    return render_template("index.html", title=title)
 
 @app.route('/about')
 def about():
