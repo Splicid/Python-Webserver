@@ -13,7 +13,7 @@
       <br>
       {% for friend in friends %}
         <h1>
-          {{ friend.name}}
+          {{ friend.name}} <a href="/update/{{friend.id}}" class="btn btn-outline-secondary btn-sm">Update</a>
         </h1>
       {% endfor %}
 {% endblock %}
