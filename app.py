@@ -18,6 +18,16 @@ class Friends(db.Model):
 # Create a function to return a string
     def _repr_(self):
         return '<Name %r>' % self.id
+@app.route('/delete/<int:id>')
+def delete(id):
+    friend_to_delete = Friends.query.get_or_404(id)
+
+    try:
+        db.session.delete(friend_to_delete)
+        db.session.comit()
+        return redirect('/data')
+    except:
+        return "There was a problem deleting"
 
 #Webpage Routes
 @app.route('/data', methods=['POST', 'GET'])
@@ -27,7 +37,9 @@ def data():
     if request.method == "POST":
         friend_name = request.form['name']
         new_friend = Friends(name=friend_name)
+        print(new_friend)
         #push
+        
         try:
             db.session.add(new_friend)
             db.session.commit()

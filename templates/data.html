@@ -14,6 +14,8 @@
       {% for friend in friends %}
         <h1>
           {{ friend.name}} <a href="/update/{{friend.id}}" class="btn btn-outline-secondary btn-sm">Update</a>
+
+          <a href="/delete/{{friend.id}}" class="btn btn-outline-danger btn-sm">Update</a>
         </h1>
       {% endfor %}
 {% endblock %}

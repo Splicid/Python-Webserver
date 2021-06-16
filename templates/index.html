@@ -2,5 +2,19 @@
 {% block title %} Welcome to my test database {% endblock %}
 
 {% block content %}
+      <div class="container">
+          <h1>Insert Customer Info</h1>
+          <br/>
+          <form action="/data" METHOD="POST">
+            <input type="text" placeholder="Name" name="name">
+            <input type="submit" value="Add Name" class="btn btn-secondary">
+          </form>
 
+      </div>
+      <br>
+      {% for friend in friends %}
+        <h1>
+          {{ friend.name}}
+        </h1>
+      {% endfor %}
 {% endblock %}
